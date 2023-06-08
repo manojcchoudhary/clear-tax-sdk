@@ -8,7 +8,7 @@ In pom.xml add the below :
 
 ```
 <dependency>
-    <groupId>com.github.manojcchoudhary<groupId>
+    <groupId>com.github.manojcchoudhary</groupId>
     <artifactId>clear-tax-sdk</artifactId>
     <version>v0.0.1</version>
 </dependency>
