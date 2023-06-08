@@ -10,6 +10,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import dev.manojc.cleartaxsdk.payload.downloadinvoice.ClearTaxDownloadInvoiceRequestPayload;
 import dev.manojc.cleartaxsdk.payload.generateirn.ClearTaxTransactionRequestPayload;
 import dev.manojc.cleartaxsdk.payload.generateirn.response.ClearTaxTransactionResponse;
@@ -26,30 +29,41 @@ public class ClearInvoiceApi {
 	private static final String GENERATE_IRN_URL = "/einv/v2/eInvoice/generate";
 	private static final String DOWNLOAD_INVOICE = "/einv/v2/eInvoice/download";
 
-	public static <E> ResponseEntity<ClearTaxTransactionResponse<E>> generateIrn(
-			final Collection<ClearTaxTransactionRequestPayload<E>> payload) {
+	public static <E> ResponseEntity<Collection<ClearTaxTransactionResponse<E>>> generateIrn(
+			final Collection<ClearTaxTransactionRequestPayload<E>> payload) throws JsonProcessingException {
+		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeaders();
+		return generateIrnInternal(payload, headers);
+	}
+
+	public static <E> ResponseEntity<Collection<ClearTaxTransactionResponse<E>>> generateIrnInternal(
+			final Collection<ClearTaxTransactionRequestPayload<E>> payload, final HttpHeaders headers)
+			throws JsonProcessingException {
 		final String URL = ClearTaxRequestUtils.appendHost(GENERATE_IRN_URL);
 		log.info("Clear Tax API - generate IRN initialized {}", URL);
 		final RestTemplate restTemplate = new RestTemplate();
-		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeaders();
-		final HttpEntity<Collection<ClearTaxTransactionRequestPayload<E>>> entity = new HttpEntity<>(payload, headers);
-		try {
-			return restTemplate.exchange(URL, HttpMethod.PUT, entity,
-					new ParameterizedTypeReference<ClearTaxTransactionResponse<E>>() {
-					});
-		} catch (Exception e) {
-			log.error("Something went wrong", e);
-		}
-		return null;
+		ObjectMapper mapper = new ObjectMapper();
+		String requestJson = mapper.writeValueAsString(payload);
+		final HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);		
+		return restTemplate.exchange(URL, HttpMethod.PUT, entity,
+				new ParameterizedTypeReference<Collection<ClearTaxTransactionResponse<E>>>() {
+				});
 	}
+
 
 	public static Optional<ResponseEntity<byte[]>> downloadEInvoice(
 			final ClearTaxDownloadInvoiceRequestPayload payload) {
+		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeaders();	
+		return downloadEInvoice(payload, headers);
+	}
+
+	private static Optional<ResponseEntity<byte[]>> downloadEInvoice(
+			final ClearTaxDownloadInvoiceRequestPayload payload, final HttpHeaders headers) {
 		final String URL = ClearTaxRequestUtils.appendHost(DOWNLOAD_INVOICE);
 		log.info("Clear Tax API - e-invoice download initialized {}", URL);
-		final RestTemplate restTemplate = new RestTemplate();
-		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeaders();
+		final RestTemplate restTemplate = new RestTemplate();		
 		final HttpEntity<ClearTaxDownloadInvoiceRequestPayload> entity = new HttpEntity<>(payload, headers);
 		return Optional.of(restTemplate.exchange(URL, HttpMethod.GET, entity, byte[].class));
 	}
+	
+	
 }

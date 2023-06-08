@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import dev.manojc.cleartaxsdk.models.transaction.addressdetails.AddressDetails;
+import dev.manojc.cleartaxsdk.models.transaction.addressdetails.StateCode;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -29,6 +30,6 @@ public class BuyerDetails extends AddressDetails {
     @Length(min = 1, max = 2, message = "Pos (place of supply) should be equal or greater than 1 and less than or equal to 2 digits")
     @NotBlank(message = "Pos (place of supply) is required")
     @Pattern(regexp = "^(?!0+$)([0-9]{1,2})$")
-    private String placeOfSupply;
+    private StateCode placeOfSupply;
 
 }

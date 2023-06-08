@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum DocumentStatus {
     @JsonProperty("document_status")
 	IRN_GENERATED("IRN_GENERATED"),
+	IRN_GENERATION_FAILED("IRN_GENERATION_FAILED"),
 	NOT_CREATED("NOT_CREATED");
 
 	private String text;

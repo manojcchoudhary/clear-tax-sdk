@@ -23,4 +23,19 @@ public class ClearTaxConfiguration {
 	@NotBlank(message = "Clear Tax gstin is required ")
 	private String gstin;
 
+	public boolean hasHost() {
+		return null != host;
+	}
+
+	public boolean hasAuthToken() {
+		return null != authToken;
+	}
+
+	public boolean hasOwnerId() {
+		return null != ownerId;
+	}
+
+	public boolean hasGstin() {
+		return null != gstin;
+	}
 }

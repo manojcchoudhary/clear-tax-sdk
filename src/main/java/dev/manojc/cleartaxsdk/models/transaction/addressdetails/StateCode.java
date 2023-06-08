@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum StateCode {
 
-	  @JsonProperty("StateCode")
 	  JAMMU_AND_KASHMIR("1"), // JAMMU AND KASHMIR
 	  HIMACHAL_PRADESH("2"), // HIMACHAL PRADESH
 	  PUNJAB("3"), // PUNJAB
@@ -54,7 +53,7 @@ public enum StateCode {
 	  ANDHRA_PRADESH("37"), // ANDHRA PRADESH
 	  Ladakh("38"), // Ladakh
 	  OTHER_TERRITORY("97"), // OTHER TERRITORY
-	  OTHER_COUNTR("96"); // OTHER COUNTRY
+	  OTHER_COUNTRY("96"); // OTHER COUNTRY
 
 
 		private String text;
