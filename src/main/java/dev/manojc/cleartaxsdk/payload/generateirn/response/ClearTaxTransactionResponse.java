@@ -66,5 +66,5 @@ public class ClearTaxTransactionResponse<E> {
 	}
 
 	@JsonProperty("govt_response")
-	private CommonGovernmentTransaction governmentReponse;
+	private CommonGovernmentTransaction governmentResponse;
 }
