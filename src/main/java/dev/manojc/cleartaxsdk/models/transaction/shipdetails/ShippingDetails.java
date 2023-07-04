@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import dev.manojc.cleartaxsdk.models.transaction.addressdetails.AddressDetails;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -13,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class ShippingDetails extends AddressDetails {
 
 }

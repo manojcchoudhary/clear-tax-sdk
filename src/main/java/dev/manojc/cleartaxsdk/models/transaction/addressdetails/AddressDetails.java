@@ -10,8 +10,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,7 +21,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper=true)
 @Getter
-public abstract class AddressDetails extends PartialAddressDetails {
+@NoArgsConstructor
+@AllArgsConstructor
+public class AddressDetails extends PartialAddressDetails {
 
     @JsonProperty("Gstin")
 	@Length(max = 15, min = 15, message = "Gstin should be of length 15")

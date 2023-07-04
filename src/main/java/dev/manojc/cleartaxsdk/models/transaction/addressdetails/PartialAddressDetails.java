@@ -13,14 +13,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuperBuilder
 @Getter
-public abstract class PartialAddressDetails {
+@NoArgsConstructor
+@AllArgsConstructor
+public class PartialAddressDetails {
 
     @JsonProperty("Addr1")
 	@Length(max = 100, min = 1, message = "Addr1 should be greater than 3 and lesser than 100 characters")
