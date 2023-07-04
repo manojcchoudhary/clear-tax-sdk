@@ -26,8 +26,8 @@ public class ContractDetails {
     @Pattern(regexp = "^([^\\\"])*$", message = "RecAdvRef (Receipt Advice Number) should be of pattern ^([^\\\"])*$")
     private String receiptAdviceNumber;
 
-    @JsonProperty("RecAdvRef")
-    @Length(min = 10, max = 10, message = "RecAdvRef (Receipt Advice Number) should be at least 10 and at most 10 characters")
+    @JsonProperty("RecAdvDt")
+    @Length(min = 10, max = 10, message = "RecAdvRef Optional. Date of Receipt Advice")
     @Nullable
     @Pattern(regexp = "^[0-3][0-9]\\/[0-1][0-9]\\/[2][0][1-2][0-9]$", message = "RecAdvRef (Receipt Advice Number) should be of pattern ^[0-3][0-9]\\/[0-1][0-9]\\/[2][0][1-2][0-9]$")
     private String dateOfReceiptAdvice;
