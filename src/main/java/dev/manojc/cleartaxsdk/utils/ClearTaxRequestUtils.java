@@ -2,6 +2,7 @@ package dev.manojc.cleartaxsdk.utils;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 
 import dev.manojc.cleartaxsdk.initializer.ClearTaxConfigurationInitializer;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,13 @@ public class ClearTaxRequestUtils {
 			headers.set(X_CLEARTAX_AUTH_TOKEN, configProvider.getAuthToken());
 		return headers;
 	}
+	
+	public static HttpHeaders getClearTaxAuthHeader(String authToken) {
+		final HttpHeaders headers = new HttpHeaders();
+		if (StringUtils.hasText(authToken))
+			headers.set(X_CLEARTAX_AUTH_TOKEN, authToken);
+		return headers;
+	}
 
 	public static HttpHeaders getClearTaxHeaders() {
 		final HttpHeaders headers = getClearTaxAuthHeader();
@@ -38,6 +46,26 @@ public class ClearTaxRequestUtils {
 			headers.set(OWNER_ID, configProvider.getOwnerId());
 		if (configProvider.hasGstin())
 			headers.set(GSTIN_HEADER, configProvider.getGstin());
+		return headers;
+	}
+	
+	public static HttpHeaders getClearTaxHeadersCustomGstin(String gstin, String ownerId) {
+		final HttpHeaders headers = getClearTaxAuthHeader();
+		headers.setContentType(MediaType.APPLICATION_JSON);				
+		if (StringUtils.hasText(ownerId))
+			headers.set(OWNER_ID, configProvider.getOwnerId());
+		if (StringUtils.hasText(gstin))
+			headers.set(GSTIN_HEADER, gstin);
+		return headers;
+	}
+	
+	public static HttpHeaders getClearTaxHeadersCustom(String gstin, String ownerId, String authToken) {
+		final HttpHeaders headers = getClearTaxAuthHeader(authToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);				
+		if (StringUtils.hasText(ownerId))
+			headers.set(OWNER_ID, configProvider.getOwnerId());
+		if (StringUtils.hasText(gstin))
+			headers.set(GSTIN_HEADER, gstin);
 		return headers;
 	}
 

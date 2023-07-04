@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dev.manojc.cleartaxsdk.initializer.ClearTaxConfigurationInitializer;
 import dev.manojc.cleartaxsdk.payload.downloadinvoice.ClearTaxDownloadInvoiceRequestPayload;
 import dev.manojc.cleartaxsdk.payload.generateirn.ClearTaxTransactionRequestPayload;
 import dev.manojc.cleartaxsdk.payload.generateirn.response.ClearTaxTransactionResponse;
@@ -28,10 +29,29 @@ public class ClearInvoiceApi {
 
 	private static final String GENERATE_IRN_URL = "/einv/v2/eInvoice/generate";
 	private static final String DOWNLOAD_INVOICE = "/einv/v2/eInvoice/download";
-
+	private static ClearTaxConfigurationInitializer configProvider = ClearTaxConfigurationInitializer.getInstance();
+	
 	public static <E> ResponseEntity<Collection<ClearTaxTransactionResponse<E>>> generateIrn(
 			final Collection<ClearTaxTransactionRequestPayload<E>> payload) throws JsonProcessingException {
 		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeaders();
+		return generateIrnInternal(payload, headers);
+	}
+	
+	public static <E> ResponseEntity<Collection<ClearTaxTransactionResponse<E>>> generateIrn(
+			final Collection<ClearTaxTransactionRequestPayload<E>> payload, String gstin) throws JsonProcessingException {
+		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeadersCustomGstin(gstin, configProvider.getOwnerId());
+		return generateIrnInternal(payload, headers);
+	}
+	
+	public static <E> ResponseEntity<Collection<ClearTaxTransactionResponse<E>>> generateIrn(
+			final Collection<ClearTaxTransactionRequestPayload<E>> payload, String gstin, String ownerId) throws JsonProcessingException {
+		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeadersCustomGstin(gstin, ownerId);
+		return generateIrnInternal(payload, headers);
+	}
+	
+	public static <E> ResponseEntity<Collection<ClearTaxTransactionResponse<E>>> generateIrn(
+			final Collection<ClearTaxTransactionRequestPayload<E>> payload, String gstin, String ownerId, String authToken) throws JsonProcessingException {
+		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeadersCustom(gstin, ownerId, authToken);
 		return generateIrnInternal(payload, headers);
 	}
 
@@ -49,7 +69,24 @@ public class ClearInvoiceApi {
 				});
 	}
 
-
+	public static Optional<ResponseEntity<byte[]>> downloadEInvoice(
+			final ClearTaxDownloadInvoiceRequestPayload payload, String gstin) {
+		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeadersCustomGstin(gstin, configProvider.getOwnerId());
+		return downloadEInvoice(payload, headers);
+	}
+	
+	public static Optional<ResponseEntity<byte[]>> downloadEInvoice(
+			final ClearTaxDownloadInvoiceRequestPayload payload, String gstin, String ownerId) {
+		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeadersCustomGstin(gstin, ownerId);
+		return downloadEInvoice(payload, headers);
+	}
+	
+	public static Optional<ResponseEntity<byte[]>> downloadEInvoice(
+			final ClearTaxDownloadInvoiceRequestPayload payload, String gstin, String ownerId, String authToken) {
+		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeadersCustom(gstin, ownerId, authToken);
+		return downloadEInvoice(payload, headers);
+	}
+	
 	public static Optional<ResponseEntity<byte[]>> downloadEInvoice(
 			final ClearTaxDownloadInvoiceRequestPayload payload) {
 		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeaders();	
