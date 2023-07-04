@@ -11,7 +11,7 @@ import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import dev.manojc.cleartaxsdk.models.transaction.transactiondetails.TransactionDetails;
+import dev.manojc.cleartaxsdk.models.transaction.ClearTaxTransaction;
 import dev.manojc.cleartaxsdk.payload.generateirn.response.government.CommonGovernmentTransaction;
 import lombok.Data;
 
@@ -59,7 +59,7 @@ public class ClearTaxTransactionResponse<E> {
 	private Optional<String> transactionMetadata;
 
 	@JsonProperty("transaction")
-	private Optional<TransactionDetails> transaction;
+	private Optional<ClearTaxTransaction> transaction;
 
 	public boolean isSuccess() {
 		return DocumentStatus.IRN_GENERATED.equals(documentStatus);
