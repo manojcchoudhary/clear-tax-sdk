@@ -6,6 +6,7 @@ import java.util.Collections;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -28,4 +29,13 @@ public class ClearTaxDownloadInvoiceRequestPayload {
     @Length(min = 1, max = 10, message = "irns should be at least 1 and at most 10")
     private Collection<String> irns = Collections.emptyList();
 
+    
+    @JsonProperty("template")    
+    @Nullable   
+    private String template;
+    
+    @JsonProperty("enableDsc")    
+    @Nullable
+    private boolean enableDsc;
+    
 }

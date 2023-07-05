@@ -72,24 +72,28 @@ public class ClearInvoiceApi {
 	public static Optional<ResponseEntity<byte[]>> downloadEInvoice(
 			final ClearTaxDownloadInvoiceRequestPayload payload, String gstin) {
 		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeadersCustomGstin(gstin, configProvider.getOwnerId());
+		ClearTaxRequestUtils.setClearTaxHeader(headers);
 		return downloadEInvoice(payload, headers);
 	}
 	
 	public static Optional<ResponseEntity<byte[]>> downloadEInvoice(
 			final ClearTaxDownloadInvoiceRequestPayload payload, String gstin, String ownerId) {
 		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeadersCustomGstin(gstin, ownerId);
+		ClearTaxRequestUtils.setClearTaxHeader(headers);
 		return downloadEInvoice(payload, headers);
 	}
 	
 	public static Optional<ResponseEntity<byte[]>> downloadEInvoice(
 			final ClearTaxDownloadInvoiceRequestPayload payload, String gstin, String ownerId, String authToken) {
 		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeadersCustom(gstin, ownerId, authToken);
+		ClearTaxRequestUtils.setClearTaxHeader(headers);
 		return downloadEInvoice(payload, headers);
 	}
 	
 	public static Optional<ResponseEntity<byte[]>> downloadEInvoice(
 			final ClearTaxDownloadInvoiceRequestPayload payload) {
 		final HttpHeaders headers = ClearTaxRequestUtils.getClearTaxHeaders();	
+		ClearTaxRequestUtils.setClearTaxHeader(headers);
 		return downloadEInvoice(payload, headers);
 	}
 

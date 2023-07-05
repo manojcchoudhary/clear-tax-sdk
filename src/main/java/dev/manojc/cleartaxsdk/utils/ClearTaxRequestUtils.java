@@ -1,5 +1,7 @@
 package dev.manojc.cleartaxsdk.utils;
 
+import java.util.Collections;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
@@ -57,6 +59,10 @@ public class ClearTaxRequestUtils {
 		if (StringUtils.hasText(gstin))
 			headers.set(GSTIN_HEADER, gstin);
 		return headers;
+	}
+	
+	public static void setClearTaxHeader(final HttpHeaders headers) {
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_PDF));
 	}
 	
 	public static HttpHeaders getClearTaxHeadersCustom(String gstin, String ownerId, String authToken) {
