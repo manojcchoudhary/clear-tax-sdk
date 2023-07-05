@@ -62,7 +62,7 @@ public class ClearTaxRequestUtils {
 	}
 	
 	public static void setClearTaxHeader(final HttpHeaders headers) {
-		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_PDF));
+		headers.setContentType(MediaType.APPLICATION_PDF);		
 	}
 	
 	public static HttpHeaders getClearTaxHeadersCustom(String gstin, String ownerId, String authToken) {
